@@ -1,0 +1,22 @@
+cradle:
+  cabal:
+    - path: "app/Main.hs"
+      component: "writeYouAScheme:exe:writeYouAScheme"
+
+    - path: "app/Parser.hs"
+      component: "writeYouAScheme:exe:writeYouAScheme"
+
+    - path: "app/Evaluator.hs"
+      component: "writeYouAScheme:exe:writeYouAScheme"
+
+    - path: "app/Types.hs"
+      component: "writeYouAScheme:exe:writeYouAScheme"
+
+    - path: "app/Primitives.hs"
+      component: "writeYouAScheme:exe:writeYouAScheme"
+
+    - path: "app/Repl.hs"
+      component: "writeYouAScheme:exe:writeYouAScheme"
+
+    - path: "app/LispVal.hs"
+      component: "writeYouAScheme:exe:writeYouAScheme"
