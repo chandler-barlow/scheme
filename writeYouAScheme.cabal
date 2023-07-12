@@ -26,14 +26,15 @@ executable writeYouAScheme
 
     -- Modules included in this executable, other than Main.
     other-modules:    Parser
-                      Evaluator
+                      Eval
                       Types
-                      Primitives
+                      Prim
                       Repl
+                      Cli
                       LispVal
 
     -- LANGUAGE extensions used by modules in this package.
     other-extensions: OverloadedStrings
-    build-depends:    base ^>=4.16.3.0
+    build-depends:    base ^>=4.16.3.0, parsec, text, containers, mtl
     hs-source-dirs:   app
     default-language: Haskell2010

@@ -6,13 +6,13 @@ cradle:
     - path: "app/Parser.hs"
       component: "writeYouAScheme:exe:writeYouAScheme"
 
-    - path: "app/Evaluator.hs"
+    - path: "app/Eval.hs"
       component: "writeYouAScheme:exe:writeYouAScheme"
 
     - path: "app/Types.hs"
       component: "writeYouAScheme:exe:writeYouAScheme"
 
-    - path: "app/Primitives.hs"
+    - path: "app/Prim.hs"
       component: "writeYouAScheme:exe:writeYouAScheme"
 
     - path: "app/Repl.hs"
