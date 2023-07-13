@@ -1,31 +1,31 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module LispVal
-  ( Eval (..),
-    EnvCtx (..),
-    LispVal (..),
-    IFunc (..),
-    showVal,
-    LispException (..),
-  )
+module LispVal (
+  Eval (..),
+  EnvCtx (..),
+  LispVal (..),
+  IFunc (..),
+  showVal,
+  LispException (..),
+)
 where
 
 import Control.Exception
 import Control.Monad.Except
 import Control.Monad.Reader
-import qualified Data.Map as M
-import qualified Data.Text as T
+import Data.Map qualified as M
+import Data.Text qualified as T
 
 type EnvCtx = M.Map T.Text LispVal
 
 newtype Eval a = Eval {runEval :: ReaderT EnvCtx IO a}
   deriving
-    ( Monad,
-      Functor,
-      Applicative,
-      MonadReader EnvCtx,
-      MonadIO
+    ( Monad
+    , Functor
+    , Applicative
+    , MonadReader EnvCtx
+    , MonadIO
     )
 
 data LispVal
@@ -67,58 +67,58 @@ showError err =
   case err of
     (IOError txt) ->
       T.concat
-        [ "Error reading file: ",
-          txt
+        [ "Error reading file: "
+        , txt
         ]
     (NumArgs int args) ->
       T.concat
-        [ "Error Number Arguments, expected ",
-          T.pack $ show int,
-          " recieved args: ",
-          unwordsList args
+        [ "Error Number Arguments, expected "
+        , T.pack $ show int
+        , " recieved args: "
+        , unwordsList args
         ]
     (LengthOfList txt int) ->
       T.concat
-        [ "Error Length of List in ",
-          txt,
-          " length: ",
-          T.pack $ show int
+        [ "Error Length of List in "
+        , txt
+        , " length: "
+        , T.pack $ show int
         ]
     (ExpectedList txt) ->
       T.concat
-        [ "Error Expected List in funciton ",
-          txt
+        [ "Error Expected List in function "
+        , txt
         ]
     (TypeMismatch txt val) ->
       T.concat
-        [ "Error Type Mismatch: ",
-          txt,
-          showVal val
+        [ "Error Type Mismatch: "
+        , txt
+        , showVal val
         ]
     (BadSpecialForm txt) ->
       T.concat
-        [ "Error Bad Special Form: ",
-          txt
+        [ "Error Bad Special Form: "
+        , txt
         ]
     (NotFunction val) ->
       T.concat
-        [ "Error Not a Function: ",
-          showVal val
+        [ "Error Not a Function: "
+        , showVal val
         ]
     (UnboundVar txt) ->
       T.concat
-        [ "Error Unbound Variable: ",
-          txt
+        [ "Error Unbound Variable: "
+        , txt
         ]
     (PError str) ->
       T.concat
-        [ "Parser Error, expression cannot evaluate: ",
-          T.pack str
+        [ "Parser Error, expression cannot evaluate: "
+        , T.pack str
         ]
     (Default val) ->
       T.concat
-        [ "Error, Danger Will Robinson! Evaluation could not proceed!  ",
-          showVal val
+        [ "Error, Danger Will Robinson! Evaluation could not proceed!  "
+        , showVal val
         ]
 
 unwordsList :: [LispVal] -> T.Text
@@ -138,9 +138,9 @@ showVal val =
     Nil -> "Nil"
     (List contents) ->
       T.concat
-        [ "(",
-          T.unwords $ showVal <$> contents,
-          ")"
+        [ "("
+        , T.unwords $ showVal <$> contents
+        , ")"
         ]
     (Fun _) -> "(internal function)"
     (Lambda _ _) -> "(lambda function)"

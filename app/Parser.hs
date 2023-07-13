@@ -4,13 +4,13 @@ module Parser where
 
 import Control.Applicative hiding ((<|>))
 import Data.Functor.Identity (Identity)
-import qualified Data.Text as T
+import Data.Text qualified as T
 import LispVal
 import Text.Parsec
 import Text.Parsec.Expr
-import qualified Text.Parsec.Language as Lang
+import Text.Parsec.Language qualified as Lang
 import Text.Parsec.Text
-import qualified Text.Parsec.Token as Tok
+import Text.Parsec.Token qualified as Tok
 
 lexer :: Tok.GenTokenParser T.Text () Identity
 lexer = Tok.makeTokenParser style
@@ -18,21 +18,21 @@ lexer = Tok.makeTokenParser style
 style :: Tok.GenLanguageDef T.Text () Identity
 style =
   Lang.emptyDef
-    { Tok.commentStart = "{-",
-      Tok.commentEnd = "-}",
-      Tok.opStart = Tok.opLetter style,
-      Tok.opLetter = oneOf ":!#$%%&*+./<=>?@\\^|-~",
-      Tok.identStart = letter <|> oneOf "-+/*=|&><",
-      Tok.identLetter = digit <|> letter <|> oneOf "?+=|&-/",
-      Tok.reservedOpNames = ["'", "\""]
+    { Tok.commentStart = "{-"
+    , Tok.commentEnd = "-}"
+    , Tok.opStart = Tok.opLetter style
+    , Tok.opLetter = oneOf ":!#$%%&*+./<=>?@\\^|-~"
+    , Tok.identStart = letter <|> oneOf "-+/*=|&><"
+    , Tok.identLetter = digit <|> letter <|> oneOf "?+=|&-/"
+    , Tok.reservedOpNames = ["'", "\""]
     }
 
 -- no clue how any of this parsec shit works...
 
 -- also no clue about this...
 Tok.TokenParser
-  { Tok.parens = m_parens,
-    Tok.identifier = m_identifier
+  { Tok.parens = m_parens
+  , Tok.identifier = m_identifier
   } = Tok.makeTokenParser style
 
 reservedOp :: T.Text -> Parser ()
