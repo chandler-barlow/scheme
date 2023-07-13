@@ -26,3 +26,11 @@ runParseTest input =
 
 runASTinEnv :: EnvCtx -> Eval b -> IO b
 runASTinEnv code action = runResourceT $ runReaderT (runEval action) code
+
+eval :: LispVal -> Eval LispVal
+eval (List [Atom "quote", val]) = return val
+eval (Number i) = return $ Number i
+eval (String s) = return $ String s
+eval (Bool b) = return $ Bool b
+eval (List []) = return Nil
+eval Nil = retun Nil
